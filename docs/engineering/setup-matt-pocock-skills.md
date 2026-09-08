@@ -4,7 +4,7 @@
 
 Those files are the only thing that varies between repos. The skills themselves are identical everywhere; they read `docs/agents/issue-tracker.md` at run time and do what it says. That is why the set is not tied to GitHub, and why no skill file ever needs editing to point it somewhere else. Invoking it with "link the skills to a custom issue tracker" works with anything you can connect to programmatically, with zero changes to the skills.
 
-It is a prompt-driven skill, not a deterministic script. It reads your `git remote`, your existing `CLAUDE.md`, your existing `CONTEXT.md`, proposes what it found, and waits for you to confirm before writing anything.
+It is a prompt-driven skill, not a deterministic script. It reads your `git remote`, your existing `CLAUDE.md`, your existing `CONTEXT.md`, proposes what it found, and waits for you to confirm before writing anything. When it creates a new `AGENTS.md`, the base file instructs the agent to conduct all user communication in Japanese, including questions and confirmations, and to use the `ask_questions` tool whenever it asks the user a question.
 
 ## When to reach for it
 
@@ -22,6 +22,8 @@ It writes into the repo you run it in:
 | `domain.md` | `docs/agents/` |
 | `triage-labels.md` | `docs/agents/`, only when the `triage` skill is installed |
 | An `## Agent skills` block | whichever of `CLAUDE.md` / `AGENTS.md` already exists |
+
+If neither instruction file exists and you choose `AGENTS.md`, the new file also gets a `## Communication` rule requiring questions, confirmations, explanations and completion reports to be in Japanese. The same rule requires every question for the user to go through the `ask_questions` tool. The skill leaves communication rules in existing `AGENTS.md` and `CLAUDE.md` files unchanged.
 
 All of it is committed markdown. There is no user-level or global mode: the config lives in the repo, so every repo gets its own copy.
 
@@ -85,6 +87,7 @@ One long-standing complaint says yes, in these words: *"having a skill to set up
 
 - `docs/agents/issue-tracker.md` and `docs/agents/domain.md` exist, plus `triage-labels.md` if `triage` is installed.
 - An `## Agent skills` section appears in the instruction file your harness actually reads, with a one-line summary pointing at each of those files.
+- A newly created `AGENTS.md` tells the agent to communicate with the user entirely in Japanese and to ask every question through the `ask_questions` tool.
 - The tracker it proposed matches the remote you really use, and the label strings match labels that really exist in your tracker.
 - Afterwards, `/to-tickets` publishes without asking you where issues live, and `/triage` applies labels rather than inventing them.
 - Nothing in the skill files themselves changed. If setup edited a `SKILL.md`, something went wrong.

@@ -65,6 +65,7 @@ Offer **multi-context** (a root `CONTEXT-MAP.md` pointing to per-context `CONTEX
 Show the user a draft of:
 
 - The `## Agent skills` block to add to whichever of `CLAUDE.md` / `AGENTS.md` is being edited (see step 4 for selection rules)
+- The `## Communication` block when creating a new `AGENTS.md`
 - The contents of `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, and `docs/agents/triage-labels.md` (the last only when `triage` is installed)
 
 Let them edit before writing.
@@ -78,6 +79,17 @@ Let them edit before writing.
 - If neither exists, ask the user which one to create; don't pick for them.
 
 Never create `AGENTS.md` when `CLAUDE.md` already exists (or vice versa); always edit the one that's already there.
+
+When creating a new `AGENTS.md`, include this rule before the `## Agent skills` block:
+
+```markdown
+## Communication
+
+Communicate with the user entirely in Japanese, including questions, confirmations, explanations, and completion reports.
+Whenever you need to ask the user a question, always use the `ask_questions` tool.
+```
+
+This rule applies only when this skill creates `AGENTS.md`. Don't add or replace a communication rule in an existing `AGENTS.md` or `CLAUDE.md`.
 
 If an `## Agent skills` block already exists in the chosen file, update its contents in-place rather than appending a duplicate. Don't overwrite user edits to the surrounding sections.
 
