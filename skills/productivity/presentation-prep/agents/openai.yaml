@@ -1,0 +1,5 @@
+interface:
+  display_name: "Presentation Prep"
+  short_description: "Rehearse likely audience questions"
+policy:
+  allow_implicit_invocation: false
